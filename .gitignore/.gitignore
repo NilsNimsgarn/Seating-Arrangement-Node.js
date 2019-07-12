@@ -1,0 +1,64 @@
+process.stdin.resume();
+process.stdin.setEncoding("utf-8");
+var stdin_input = "";
+process.stdin.on("data", function (input) {stdin_input += input;});
+process.stdin.on("end", function () {main(stdin_input);});
+
+function main(input)
+{
+    var lineinput = input.split("\n");
+    var testfall = Number(lineinput[0]);
+    var sitz = 0;
+    
+    for (var x = 0; x < testfall; x++)
+    {
+        sitz = lineinput[x + 1];
+        var abteil = Math.floor(sitz / 12);
+        var dummy = sitz - abteil * 12;
+        var sitzG = 0;
+        var SG = 0;
+        
+        if (dummy < 7)
+        {
+            SG = 13;
+            for (var y = 1; y < 7; y++)
+            {
+                SG -= 2;
+                sitzG = y + SG;
+                if (y == dummy)
+                {
+                    break;
+                }
+            }
+        }
+         else
+        {
+            SG = 0;
+            for (var z = 1; z < 7; z++)
+            {
+                SG += 2;
+                sitzG = z - SG;
+                if (z == dummy)
+                {
+                    break;
+                }
+            }
+        }
+        
+        var lage ="";
+        switch(sitzG)
+        {
+            case 1: case 12: case 6: case 7:
+            lage = "WS";
+            break;
+            case 2: case 11: case 5: case 8:
+            lage = "MS";
+            break;
+            case 3: case 10: case 4: case 9:
+            lage = "AS";
+            break;
+        }
+        sitzG = sitzG + abteil * 12;
+        console.log(sitzG + " " + lage);
+    }
+}
